@@ -1,25 +1,21 @@
 ---
 kind: pipeline
-name: before
+type: kubernetes
+name: default
+
+clone:
+  disable: true
 
 steps:
-  - name: run
-    image: alpine
-    commands:
-      - echo before
----
-kind: pipeline
-name: after
-
-steps:
-  - name: run
-    image: alpine
-    commands:
-      - echo after
-depends_on:
-  - before
+- name: test
+  pull: if-not-exists
+  image: alpine
+  commands:
+  - echo hello
+  - echo world
+  - exit 0
 ---
 kind: signature
-hmac: 5a3935a478de44b0d813b359f8b73d470a5626595c05d84e2c0185ce6572efee
+hmac: a66ccc6152b6ac7b90eb26fbe81b55bade1ae69a7b4408dc7e279ae2d9bac374
 
 ...
